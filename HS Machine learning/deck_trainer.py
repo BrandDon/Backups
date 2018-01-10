@@ -4,7 +4,7 @@ import pickle
 import numpy
 import pandas as pd
 from matplotlib import style
-from sklearn import model_selection, ensemble
+from sklearn import model_selection, ensemble, svm
 
 style.use('ggplot')
 
@@ -18,7 +18,8 @@ Y = numpy.array(df['Type'])
 
 X_train, X_test, Y_train, Y_test = model_selection.train_test_split(X, Y, test_size=0.2)
 
-clf = ensemble.RandomForestClassifier()
+clf = ensemble.RandomForestClassifier() # 84%
+# clf = svm.SVC(decision_function_shape='ovr') # 82%
 clf.fit(X_train, Y_train)
 
 # Saving and loading the trained classifier:
@@ -29,7 +30,7 @@ with open('trained_deck_clf.pickle', 'wb') as f:
 
 accuracy = clf.score(X_test, Y_test)
 
-print 'Accuracy: {0}'.format(accuracy)
+print 'Accuracy: {0}%'.format(str(accuracy * 100)[:5])
 
 # legend = {
 #     'Midrange': (0, 'b'),
